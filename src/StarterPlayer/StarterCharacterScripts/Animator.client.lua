@@ -18,14 +18,13 @@ local humanoid:Humanoid = char:WaitForChild('Humanoid')
 local animator:typeof(game.StarterPlayer.StarterCharacter.Humanoid.Animator) = humanoid:WaitForChild('Animator')
 
 
-function loadTracks(animationid,name)
+function loadTracks(animationid:number, name)
 	local animInstance = Instance.new('Animation')
 	animInstance.AnimationId = "rbxassetid://"..tostring(animationid)
 	animInstance.Name = name
 	animInstance.Parent = animator
 	local t  = animator:LoadAnimation(animInstance) 
-	t.Priority = Enum.AnimationPriority.Action4	
-	
+	t.Priority = Enum.AnimationPriority.Action4		
 	return t
 end
 local gymtracks:{[string]:AnimationTrack} = {}
@@ -39,16 +38,14 @@ local debounce = tick()
 local currentlyPlaying:AnimationTrack | nil = nil
 local persistence = 0.01
 gymtracks['back']:GetMarkerReachedSignal('start'):Connect(function()
-	game.ReplicatedStorage.Remotes.animatePet:FireServer('play','back') 
-	if currentlyPlaying then	 currentlyPlaying:AdjustSpeed(1 ) end
+	if cps > 2 then
+		if currentlyPlaying then	 currentlyPlaying:AdjustSpeed(2) end
+		game.ReplicatedStorage.Remotes.animatePet:FireServer('play','back') 
+	end
 end)
 run.Stepped:Connect(function()	
 	if not localplrModule.info.activity then  for name,track in pairs(gymtracks) do track:Stop() end return end
 	if localplrModule.info.activity.family == 'gym' then
-		if localplrModule.info.activity.name == 'chest' then	
-			camera.CameraType = Enum.CameraType.Scriptable
-			camera.CFrame = CFrame.new(player.Character.PrimaryPart.Position+Vector3.new(-10,12,-8.6),player.Character.PrimaryPart.Position)
-		end
 		if ( localplrModule.info.activity.name == 'stamina' and (gymtracks['stamina'].IsPlaying == false) 
 			and (gymtracks['staminaWithoutPet'].IsPlaying == false) ) or (localplrModule.info.activity.name~='stamina' 
 			and gymtracks[localplrModule.info.activity.name].IsPlaying == false)then

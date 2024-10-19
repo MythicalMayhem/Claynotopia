@@ -32,11 +32,11 @@ local module = {
 	},
 	gym = {
 		rewards = {
-			legs    = {xp = 1, amount = 1, muscles = {'righthamstring','lefthamstring' ,'rightcalve','leftcalve',} },
-			arms    = {xp = 1, amount = 1, muscles = {'righttricep','rightbicep','lefttricep','leftbicep','rightshoulder','leftshoulder',	'rightforearm', 'leftforearm',  } },
 			back    = {xp = 1, amount = 1, muscles = {'back','rightneck','leftneck'} },
 			chest 	= {xp = 1, amount = 1, muscles = {'leftchest','rightchest','abs','torso'}},
 			stamina = {xp = 1, amount = 1, muscles = {'leftquad','rightquad' ,'rightcalve','leftcalve'}},
+			legs    = {xp = 1, amount = 1, muscles = {'righthamstring','lefthamstring' ,'rightcalve','leftcalve',} },
+			arms    = {xp = 1, amount = 1, muscles = {'righttricep','rightbicep','lefttricep','leftbicep','rightshoulder','leftshoulder',	'rightforearm', 'leftforearm',  } },
 		},
 		weights = {
 			stamina = { 
@@ -91,25 +91,28 @@ local module = {
 			savoring = "rbxassetid://88702903539375"  ,exhaling = "rbxassetid://90861737031988"  ,drooling = "rbxassetid://77332358103655"  ,
 			pleading = "rbxassetid://126557040781498" , nauseated = "rbxassetid://119571791304607" , screaming = "rbxassetid://86970197353612"  ,
 			astonished 		= "rbxassetid://93067148051175", expressionless 	= "rbxassetid://84978248153602",
+		},
+		auras = {
+			dbzyellow = "rbxassetid://135858864362044",
+			dbzorange = "rbxassetid://130717209769455",
+			dbzpurple = "",
+			dbzred = "rbxassetid://140614601601469",
+			dbzlightgreen = "rbxassetid://122827001527454",
+			dbzlightblue = "rbxassetid://125972920663997",
 		}
 	},
 	
 	-- ===----=====---->= animations <=----====----===
 	animations = {
-		gym = {		
+		gym = {
 			staminaWithoutPet = 95007774015177,
 			stamina = 125237330872604 ,--122422911617093, -- treadmill
 			back    = 85930718791547 ,-- pushup
 			chest   = 95650062928551, -- bench
 			legs 	  = 76416572263780 , -- leg lift
 			arms    = 114408369352630,--109108022501449, -- squat
-			
 		},
-		boss = {
-			init = 118679207784402,
-			lost = 140372530988812,
-			win  = 90209508629498,
-		}
+		boss = { init = 118679207784402, lost = 140372530988812, win  = 90209508629498, }
 	},
 	PetAnimations= {
 		dactly 	= {idle = 138639237389424,run = 103208851986605,jump = 110904156705939,walk = 112272777854914,
@@ -132,7 +135,6 @@ local module = {
 
 		orange	= {idle = 113945091990715,run  = 97770854724921,walk = 115236626710504,jump = 77410032998877,
 			back=105520236291147,legs = 117217159707356, arms=83636885842795,chest =95641882370840,stamina=104501706463704 },
-
 		rot ={idle = 113945091990715,run  = 97770854724921,walk = 115236626710504,jump = 77410032998877 ,
 			back=105520236291147,legs = 117217159707356, arms=83636885842795,chest =95641882370840,stamina=104501706463704},
 		greenraptor = {idle = 113945091990715,run  = 97770854724921,walk = 115236626710504,jump = 77410032998877 ,
@@ -147,14 +149,14 @@ local module = {
 		gray  = {idle = 124885236656868, run = 135643977769029, walk = 113219168134899, jump = 138619139635009,
 			back = 121118864695964,chest = 109378723710955 ,stamina = 90851079039358,legs =112564747318755,arms=135312796501057},
 
-		frog =   {idle = 138509667884524, run = 75880769200193, walk = 97694781919518, jump = 103705570909993,
-			back=86850994928384,legs = 100841595145600, arms=83654643688133,chest =109100100434145 ,stamina=107203167026660},
+		frog =   {idle = 138509667884524, run = 137501026174570, walk = 97694781919518, jump = 103705570909993,
+			back=86850994928384,legs = 100841595145600, arms=83654643688133,chest =109100100434145  ,stamina=107203167026660},
 		lean =   {idle = 138509667884524, run = 75880769200193, walk = 97694781919518, jump = 103705570909993,
-			back=86850994928384,legs = 100841595145600, arms=83654643688133,chest =109100100434145 ,stamina=107203167026660},
+			back=86850994928384,legs = 100841595145600, arms=83654643688133,chest =109100100434145  ,stamina=107203167026660},
 		yellow = {idle = 138509667884524, run = 75880769200193, walk = 97694781919518, jump = 103705570909993,
-			back=86850994928384,legs = 100841595145600, arms=83654643688133,chest =109100100434145 ,stamina=107203167026660},
+			back=86850994928384,legs = 100841595145600, arms=83654643688133,chest =109100100434145  ,stamina=107203167026660},
 		lightblue = {idle = 138509667884524, run = 75880769200193, walk = 97694781919518, jump = 103705570909993,
-			back=86850994928384,legs = 100841595145600, arms=83654643688133,chest =109100100434145 ,stamina=107203167026660},
+			back=86850994928384,legs = 100841595145600, arms=83654643688133,chest =109100100434145  ,stamina=107203167026660},
 },
 	claymaker = {
 		animations = {

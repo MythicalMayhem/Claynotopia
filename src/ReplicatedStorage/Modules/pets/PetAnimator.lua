@@ -39,17 +39,16 @@ function module:LoadAnimation (pet:typeof (game.ServerStorage.dinos.tyson),useri
 		anim.Parent = animator
 		anim.Name = i
 		tracks[i] = {track = animator:LoadAnimation(anim),waitUntil = false,name = i}
-		if i =='jump' or i=='back' then tracks[i].waitUntil = true 		tracks[i].track.Looped = false tracks[i].track.Priority = Enum.AnimationPriority.Action tracks[i].track:AdjustSpeed(5)
+		if i =='jump' or i=='back' then tracks[i].waitUntil = true 		tracks[i].track.Looped = false tracks[i].track.Priority = Enum.AnimationPriority.Action4 
 		else  tracks[i].track.Looped = true   end
-		tracks[i].track.Priority = Enum.AnimationPriority.Action
- 
+		tracks[i].track.Priority = Enum.AnimationPriority.Action 
 	end	 
  
 	module.connections[userid] = {
+		state = 'idle',
 		tracks=tracks,
 		waitUntil = false,
 		instance = pet,
-		state = 'idle',
 	}
 	module.stateRegister[userid] = {
 		state = 'idle',
@@ -62,12 +61,12 @@ function module:LoadAnimation (pet:typeof (game.ServerStorage.dinos.tyson),useri
 
 end
 
-function module:Play(userid:number,name:string) 
+function module:Play(userid:number,name:string)  
 	local p = module.connections[userid]
 	local t = p.tracks[name]
 	p.state = name
-	t.track:Play(1)
-	if p.waitUntil   then return end 
+	t.track:Play( )
+	if p.waitUntil then return end 
 	if t.waitUntil then 
 		t.track.Looped = false
 		p.waitUntil = true
@@ -83,7 +82,7 @@ function module:Place(userid:number,cframe:CFrame)
 end
 
 function module:Stop(userid:number,name:string)
-	for i,v in pairs(module.connections[userid].tracks) do v.track:Stop(1) end
+	for i,v in pairs(module.connections[userid].tracks) do v.track:Stop(0) end
 	module:Play(userid,'idle')
 end
 

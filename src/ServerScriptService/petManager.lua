@@ -3,9 +3,12 @@ local players  = game:GetService('Players')
 
 local animateRemote = game.ReplicatedStorage.Remotes.animatePet
 local attachPet2plr = game.ReplicatedStorage.Remotes.attachPet
+
+local PetStateMachine = require(game.ReplicatedStorage.Modules.pets.PetStateMachine)
 local playerDataManager = require(game.ServerScriptService.playerData)
 local petConfig = require(game.ReplicatedStorage.Modules.pets.PetAnimator)
 local petm = {}
+
 
 function createModel(name:string)
 	local temppl8 = game.ServerStorage.dinos._template:Clone()
@@ -16,8 +19,7 @@ function createModel(name:string)
 	temppl8.HumanoidRootPart.WeldConstraint.Part0 = temppl8.PrimaryPart
 	temppl8.HumanoidRootPart.WeldConstraint.Part1 = pet.PrimaryPart
 	pet.Parent = temppl8
-	temppl8:SetAttribute('type',pet:GetAttribute('type'))
-	pet.PrimaryPart.Anchored = true
+	temppl8:SetAttribute('type',pet:GetAttribute('type')) 
 	return temppl8
 end
 function petm:AttachPetToPlayer(whichPet:string,uid:number)
@@ -35,8 +37,8 @@ function petm:AttachPetToPlayer(whichPet:string,uid:number)
 									debounce = tick()
 								}}
 	pet:PivotTo(players:GetPlayerByUserId(uid).Character:GetPivot()*CFrame.new(2,1,2)) 
-	animateRemote:FireClient(players:GetPlayerByUserId(uid),pet.Name,petm[uid].animations )
-	attachPet2plr:FireClient(players:GetPlayerByUserId(uid),pet,'self')
+	PetStateMachine:Init(uid,pet.Name,petm[uid].animations)
+ 
 	return pet
 end
 

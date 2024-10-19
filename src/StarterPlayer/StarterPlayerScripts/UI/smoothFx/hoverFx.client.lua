@@ -24,9 +24,8 @@ function createTween(instance,to:UDim2)
 	if instance:FindFirstChild('forwardTweenTo') then 
 		instance = instance:FindFirstChild('forwardTweenTo').Value 
 		goal = { Size = UDim2.new(to.X.Scale ,0,to.Y.Scale,0) }
-	end
-	local info = TweenInfo.new(animduration)	
-	return tws:Create(instance,info,goal)
+	end 
+	return tws:Create(instance, TweenInfo.new(animduration), goal)
 end
 
 function GetInstanceByFullName(fullName)
@@ -42,7 +41,7 @@ end
 
 
 function hover(instanceFullName:string?)
-	for fullname,size in pairs(instances) do
+	for fullname, _ in pairs(instances) do
 		if fullname==instanceFullName then continue end
 		local button:ImageButton = GetInstanceByFullName(fullname)
 		local size = instances[fullname].size
@@ -65,8 +64,10 @@ function hover(instanceFullName:string?)
 end
 
 local currentlyHovering:string? = nil
-function init(kids:{Instance&ImageButton})
-	for name,button in pairs(kids ) do
+function init(parent:Frame)
+	local kids = parent:GetDescendants() 
+	if parent:FindFirstChild('_hide') then table.insert(kids, parent:FindFirstChild('_hide')) end
+	for name,button:Instance & ImageButton in pairs(kids) do
 		if button:IsA('ImageButton') then
 			if button:FindFirstChild('forwardTweenTo') then
 				instances[button:GetFullName()] = { size = button:FindFirstChild('forwardTweenTo').Value.Size, z = button.ZIndex,animateTo = 0.3 }
@@ -84,14 +85,8 @@ function init(kids:{Instance&ImageButton})
 	end	
 end 
 
-init(ances.menus.backpack:GetDescendants())
-init(ances.menus.vip:GetDescendants())
-init(ances.menus.dailyRewards:GetDescendants())
-init(ances.menus.store:GetDescendants())
-init(ances.Training:GetDescendants())
-init(ances.claymaker:GetDescendants())
-init(ances.gymShop:GetDescendants())
-init(ances.main:GetDescendants())
-init({ances.XButton})
+init(ances.menus.dailyRewards) init(ances.menus.backpack) init(ances.menus.store) init(ances.menus.vip)
+init(ances.claymaker) init(ances.Training) init(ances.gymShop) init(ances.main)
+ 
 
 

@@ -6,7 +6,8 @@ local playerModule = require(game.ServerScriptService.playerData)
 
 purchaseRem.OnServerEvent:Connect(function(player,reqData)
 	if reqData.family == 'claymaker' then			
-		local shopItems = gameData.claymaker.items
+		print(reqData)
+		local shopItems = gameData.claymaker[reqData.origin]
 		local luck = math.random(1,100)
 		local candidate = nil
 		for i,item in pairs(shopItems) do

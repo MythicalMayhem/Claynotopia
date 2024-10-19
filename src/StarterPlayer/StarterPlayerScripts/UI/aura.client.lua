@@ -16,6 +16,8 @@ for i,button:ImageButton in pairs(ances.main:GetChildren()) do
 end
 
 function on() 
+	ances.currencies.Visible = false
+	ances.main.Visible = false
 	local model = game.Workspace.Aura
 	player.Character.Archivable = true
 	local character = player.Character:Clone() 
@@ -26,26 +28,25 @@ function on()
 	character.HumanoidRootPart.RootAttachment:ClearAllChildren()
 	model.PrimaryPart.Rig:ClearAllChildren()
 	character:PivotTo(model.PrimaryPart.Rig.WorldCFrame)
-	character.Parent = model.PrimaryPart.Rig
-	ances.main.Visible = true
-	ances.currencies.Visible = true
+	character.Parent = model.PrimaryPart.Rig 
 	camera.CameraType = Enum.CameraType.Scriptable
 	camera.CFrame = model.PrimaryPart.Camera.WorldCFrame
 end
 
 local selected 
 function off()
-	ances.main.Visible = true
-	ances.currencies.Visible = true
 	local model = game.Workspace.Aura
 	camera.CameraType = Enum.CameraType.Custom
 	pcall(function() model.PrimaryPart:FindFirstAncestorOfClass("Model"):Destroy() end)
+	ances.main.Visible = true
+	ances.currencies.Visible = true 	
 end
-windowTweens:addWindow('default', ances.menus.aura, off, on, false)
 
+windowTweens:addWindow('default', ances.menus.aura, off, on, false)
 function attachAura(name)
 	if selected then selected:Destroy() end
 	local model = game.Workspace.Aura.PrimaryPart:FindFirstAncestorOfClass("Model")
 	selected = game.ReplicatedStorage.Auras[name]:Clone()
 	selected.Parent = model.PrimaryPart
 end
+

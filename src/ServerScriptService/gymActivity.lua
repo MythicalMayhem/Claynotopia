@@ -12,15 +12,13 @@ activity.connections = { }
 
 function computeReward(userid:number,BaseAmount:number) -- BaseAmount = How Much the activity gives
  
-	local petWeight = 1
+	local petWeight = 10
 	if playerData.connections[userid].activity.name == 'stamina' then  
 		petWeight = sacred.gym.weights.stamina[playerData.connections[userid].activity.weight].reward
-	else 
-		petWeight = sacred.gym.weights.other[playerData.connections[userid].activity.weight].reward
-	end 
+	else  petWeight = sacred.gym.weights.other[playerData.connections[userid].activity.weight].reward end 
 
 	local ClickMultiPlier = playerData.connections[userid].multiplier -- x1 to x2.2 
-	return  (petWeight/10 ) * ClickMultiPlier * BaseAmount
+	return  (petWeight*0.1 ) * ClickMultiPlier * BaseAmount*(1 + (playerData.connections[userid].rank - 1)*0.2 )
 end
 
 function computeStaminaLoss(userid:number) 
@@ -45,10 +43,10 @@ function activity:attachPlayerToEquipment(player:Player,model:typeof(game.Worksp
 				p.staminaHealth = math.clamp(p.staminaHealth - staminaLoss,0,p.stamina)
 				playerData:updateCPS(player.UserId)
 				playerData:advanceXp(player.UserId,sacred.gym.rewards[model.Parent.Name].xp)
-				local t = playerData:GetData(player.UserId)
+ 
 				local stat = sacred.gym.rewards[model.Parent.Name]
 				local _amt = 100*computeReward(player.UserId,stat.amount)
-				local maxRanks = #sacred.ranks
+
 				
 				playerData.connections[player.UserId][model.Parent.Name] += _amt
 				playerData:updateTamer(player.UserId,_amt) 

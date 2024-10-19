@@ -6,7 +6,7 @@
 
 local player = game.Players.LocalPlayer
 local ances = player.PlayerGui:WaitForChild('ScreenGui') 
-local progress = ances.Training.Progress
+local progress = ances.staminaBar
 local percentage = progress.Percentage
 local F1 = progress.Frame1
 local F2 = progress.Frame2
@@ -44,6 +44,18 @@ function FramePosChanger(Direction,StarterPoint)
 	end
 end
 
+local ImageTrans = 0
+local ColorOfMissingPart = Color3.new(0,0,0)
+local ColorOfPercentPart = Color3.new(1,1,1)
+local ImageColor = Color3.new(1,1,1)
+local FlipProgress = false
+local ImageId = "129940409951049"
+local MissingPartType = "TransAndColor"
+local TransOfMissingPart = 0.25
+local TransOfPercentPart = 0
+local Direction = "Right"
+local StarterPoint = "Up"
+
 function Progress(Value:number)
 	local EvenX = math.floor(progress.AbsoluteSize.X + 0.5)%2
 	local EvenY = math.floor(progress.AbsoluteSize.Y + 0.5)%2
@@ -52,94 +64,95 @@ function Progress(Value:number)
 	local I2 = F2.ImageLabel
 	local G1 = I1.UIGradient
 	local G2 = I2.UIGradient
-	I1.ImageColor3 = script.ImageColor.Value
-	I2.ImageColor3 = script.ImageColor.Value
-	I1.ImageTransparency = script.ImageTrans.Value
-	I2.ImageTransparency = script.ImageTrans.Value
-	I1.Image = "rbxassetid://" .. script.ImageId.Value
-	I2.Image = "rbxassetid://" .. script.ImageId.Value
-	if script.StarterPoint.Value == "Up" or script.StarterPoint.Value == "Down"  then
-		FramePosChanger("Vertical",script.StarterPoint.Value)
-		if script.StarterPoint.Value == "Up" then
-			if script.Direction.Value == "Left" then
+	I1.ImageColor3 = ImageColor
+	I2.ImageColor3 = ImageColor
+	I1.ImageTransparency = ImageTrans
+	I2.ImageTransparency = ImageTrans
+	I1.Image = "rbxassetid://" .. ImageId
+	I2.Image = "rbxassetid://" .. ImageId
+	if StarterPoint == "Up" or StarterPoint == "Down"  then
+		FramePosChanger("Vertical",StarterPoint)
+		if StarterPoint == "Up" then
+			if Direction == "Left" then
 				G1.Rotation = math.clamp(PercentNumber,180,360)
 				G2.Rotation = math.clamp(PercentNumber,0,180)
-			elseif script.Direction.Value == "Right" then
+			elseif Direction == "Right" then
 				G1.Rotation = 180 - math.clamp(PercentNumber,0,180)
 				G2.Rotation = - math.clamp(PercentNumber,180,360) + 180
-			elseif script.Direction.Value == "Middle" then
+			elseif Direction == "Middle" then
 				G1.Rotation = 180 - math.clamp(PercentNumber,0,360)/2
 				G2.Rotation = math.clamp(PercentNumber,0,360)/2
 			end
-		elseif script.StarterPoint.Value == "Down" then
-			if script.Direction.Value == "Left" then
+		elseif StarterPoint == "Down" then
+			if Direction == "Left" then
 				G1.Rotation = math.clamp(PercentNumber,180,360) + 180
 				G2.Rotation = math.clamp(PercentNumber,0,180) + 180
-			elseif script.Direction.Value == "Right" then
+			elseif Direction == "Right" then
 				G1.Rotation = - math.clamp(PercentNumber,0,180)
 				G2.Rotation = - math.clamp(PercentNumber,180,360)
-			elseif script.Direction.Value == "Middle" then
+			elseif Direction == "Middle" then
 				G1.Rotation = - math.clamp(PercentNumber,0,360)/2
 				G2.Rotation = math.clamp(PercentNumber,0,360)/2 + 180
 			end
 		end
-	elseif script.StarterPoint.Value == "Left" or script.StarterPoint.Value == "Right"  then
-		FramePosChanger("Horizontal",script.StarterPoint.Value)
-		if script.StarterPoint.Value == "Left" then
-			if script.Direction.Value == "Left" then
+	elseif StarterPoint == "Left" or StarterPoint == "Right"  then
+		FramePosChanger("Horizontal",StarterPoint)
+		if StarterPoint == "Left" then
+			if Direction == "Left" then
 				G1.Rotation = math.clamp(PercentNumber,180,360) - 90
 				G2.Rotation = math.clamp(PercentNumber,0,180) - 90
-			elseif script.Direction.Value == "Right" then
+			elseif Direction == "Right" then
 				G1.Rotation = 90 - math.clamp(PercentNumber,0,180)
 				G2.Rotation = - math.clamp(PercentNumber,180,360) + 90
-			elseif script.Direction.Value == "Middle" then
+			elseif Direction == "Middle" then
 				G1.Rotation = 90 - math.clamp(PercentNumber,0,360)/2
 				G2.Rotation = math.clamp(PercentNumber,0,360)/2  - 90
 			end
-		elseif script.StarterPoint.Value == "Right" then
-			if script.Direction.Value == "Left" then
+		elseif StarterPoint == "Right" then
+			if Direction == "Left" then
 				G1.Rotation = math.clamp(PercentNumber,180,360) + 90
 				G2.Rotation = math.clamp(PercentNumber,0,180) + 90
-			elseif script.Direction.Value == "Right" then
+			elseif Direction == "Right" then
 				G1.Rotation = 270 - math.clamp(PercentNumber,0,180)
 				G2.Rotation = - math.clamp(PercentNumber,180,360) + 270
-			elseif script.Direction.Value == "Middle" then
+			elseif Direction == "Middle" then
 				G1.Rotation = 270 - math.clamp(PercentNumber,0,360)/2
 				G2.Rotation = math.clamp(PercentNumber,0,360)/2  + 90
 			end
 		end
 	else
-		script.StarterPoint.Value = "Up"
+		StarterPoint = "Up"
 		warn("Unknown Type. Only 4 available: “Up”, “Down”, “Left” and “Right”, changing to “Up”.")
 	end
-	if script.MissingPartType.Value == "Color" then
-		I1.UIGradient.Color = ColorSequence.new({ColorSequenceKeypoint.new(0,script.ColorOfPercentPart.Value),ColorSequenceKeypoint.new(0.5,script.ColorOfPercentPart.Value),ColorSequenceKeypoint.new(0.502,script.ColorOfMissingPart.Value),ColorSequenceKeypoint.new(1,script.ColorOfMissingPart.Value)})
-		I2.UIGradient.Color = ColorSequence.new({ColorSequenceKeypoint.new(0,script.ColorOfPercentPart.Value),ColorSequenceKeypoint.new(0.5,script.ColorOfPercentPart.Value),ColorSequenceKeypoint.new(0.502,script.ColorOfMissingPart.Value),ColorSequenceKeypoint.new(1,script.ColorOfMissingPart.Value)})
+	if MissingPartType == "Color" then
+		I1.UIGradient.Color = ColorSequence.new({ColorSequenceKeypoint.new(0,ColorOfPercentPart),ColorSequenceKeypoint.new(0.5,ColorOfPercentPart),ColorSequenceKeypoint.new(0.502,ColorOfMissingPart),ColorSequenceKeypoint.new(1,ColorOfMissingPart)})
+		I2.UIGradient.Color = ColorSequence.new({ColorSequenceKeypoint.new(0,ColorOfPercentPart),ColorSequenceKeypoint.new(0.5,ColorOfPercentPart),ColorSequenceKeypoint.new(0.502,ColorOfMissingPart),ColorSequenceKeypoint.new(1,ColorOfMissingPart)})
 		I1.UIGradient.Transparency = NumberSequence.new(0)
 		I2.UIGradient.Transparency = NumberSequence.new(0)
-	elseif script.MissingPartType.Value == "Trans" then
-		I1.UIGradient.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0,script.TransOfPercentPart.Value),NumberSequenceKeypoint.new(0.5,script.TransOfPercentPart.Value),NumberSequenceKeypoint.new(0.502,script.TransOfMissingPart.Value),NumberSequenceKeypoint.new(1,script.TransOfMissingPart.Value)})
-		I2.UIGradient.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0,script.TransOfPercentPart.Value),NumberSequenceKeypoint.new(0.5,script.TransOfPercentPart.Value),NumberSequenceKeypoint.new(0.502,script.TransOfMissingPart.Value),NumberSequenceKeypoint.new(1,script.TransOfMissingPart.Value)})
+	elseif MissingPartType == "Trans" then
+		I1.UIGradient.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0,TransOfPercentPart),NumberSequenceKeypoint.new(0.5,TransOfPercentPart),NumberSequenceKeypoint.new(0.502,TransOfMissingPart),NumberSequenceKeypoint.new(1,TransOfMissingPart)})
+		I2.UIGradient.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0,TransOfPercentPart),NumberSequenceKeypoint.new(0.5,TransOfPercentPart),NumberSequenceKeypoint.new(0.502,TransOfMissingPart),NumberSequenceKeypoint.new(1,TransOfMissingPart)})
 		I1.UIGradient.Color = ColorSequence.new(Color3.new(1,1,1))
 		I2.UIGradient.Color = ColorSequence.new(Color3.new(1,1,1))
-	elseif script.MissingPartType.Value == "TransAndColor" then
-		I1.UIGradient.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0,script.TransOfPercentPart.Value),NumberSequenceKeypoint.new(0.5,script.TransOfPercentPart.Value),NumberSequenceKeypoint.new(0.502,script.TransOfMissingPart.Value),NumberSequenceKeypoint.new(1,script.TransOfMissingPart.Value)})
-		I2.UIGradient.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0,script.TransOfPercentPart.Value),NumberSequenceKeypoint.new(0.5,script.TransOfPercentPart.Value),NumberSequenceKeypoint.new(0.502,script.TransOfMissingPart.Value),NumberSequenceKeypoint.new(1,script.TransOfMissingPart.Value)})
-		I1.UIGradient.Color = ColorSequence.new({ColorSequenceKeypoint.new(0,script.ColorOfPercentPart.Value),ColorSequenceKeypoint.new(0.5,script.ColorOfPercentPart.Value),ColorSequenceKeypoint.new(0.502,script.ColorOfMissingPart.Value),ColorSequenceKeypoint.new(1,script.ColorOfMissingPart.Value)})
-		I2.UIGradient.Color = ColorSequence.new({ColorSequenceKeypoint.new(0,script.ColorOfPercentPart.Value),ColorSequenceKeypoint.new(0.5,script.ColorOfPercentPart.Value),ColorSequenceKeypoint.new(0.502,script.ColorOfMissingPart.Value),ColorSequenceKeypoint.new(1,script.ColorOfMissingPart.Value)})
+	elseif MissingPartType == "TransAndColor" then
+		I1.UIGradient.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0,TransOfPercentPart),NumberSequenceKeypoint.new(0.5,TransOfPercentPart),NumberSequenceKeypoint.new(0.502,TransOfMissingPart),NumberSequenceKeypoint.new(1,TransOfMissingPart)})
+		I2.UIGradient.Transparency = NumberSequence.new({NumberSequenceKeypoint.new(0,TransOfPercentPart),NumberSequenceKeypoint.new(0.5,TransOfPercentPart),NumberSequenceKeypoint.new(0.502,TransOfMissingPart),NumberSequenceKeypoint.new(1,TransOfMissingPart)})
+		I1.UIGradient.Color = ColorSequence.new({ColorSequenceKeypoint.new(0,ColorOfPercentPart),ColorSequenceKeypoint.new(0.5,ColorOfPercentPart),ColorSequenceKeypoint.new(0.502,ColorOfMissingPart),ColorSequenceKeypoint.new(1,ColorOfMissingPart)})
+		I2.UIGradient.Color = ColorSequence.new({ColorSequenceKeypoint.new(0,ColorOfPercentPart),ColorSequenceKeypoint.new(0.5,ColorOfPercentPart),ColorSequenceKeypoint.new(0.502,ColorOfMissingPart),ColorSequenceKeypoint.new(1,ColorOfMissingPart)})
 	else
-		script.MissingPartType.Value = "Trans"
+		MissingPartType = "Trans"
 		warn("Unknown Type. Only 3 available: “Trans”, “Color” and “TransAndColor”, changing to “Trans”.")
 	end
 end
 
 percentage:GetPropertyChangedSignal("Value"):Connect(function()
 	Progress(percentage.Value)
+	progress.TextLabel.Text = tostring(math.round(percentage.Value*10)/10)..'%'
 end)
 
 for Numebr , Property in pairs(script:GetChildren()) do
 	Property:GetPropertyChangedSignal("Value"):Connect(function()
-		percentage.Value %=100
+		percentage.Value %=100 
 		Progress(percentage.Value)
 	end)
 end

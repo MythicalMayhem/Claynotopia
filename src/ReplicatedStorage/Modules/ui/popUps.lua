@@ -2,6 +2,7 @@
 local camera = workspace.CurrentCamera
 local tws = game:GetService('TweenService')
 local sacred = require(game.ReplicatedStorage.Modules.SACRED)
+local clones = game.ReplicatedStorage.assets.ui
 
 local pop = {
 	assets = sacred.assets.icons
@@ -21,8 +22,7 @@ function pop:create(what:string,howMuch:number)
 	else		
 		local assetid = pop.assets[what]
 		if not assetid then return end
-	
-		local template = script.template:Clone()
+		local template = clones.template:Clone()
 		local player = game.Players.LocalPlayer
 		local popupFrame = player.PlayerGui.ScreenGui.popUps 
 		originalPos = template.Position
