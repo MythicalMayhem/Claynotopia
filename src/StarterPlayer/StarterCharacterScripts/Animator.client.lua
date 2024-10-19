@@ -24,13 +24,12 @@ function loadTracks(animationid:number, name)
 	animInstance.Name = name
 	animInstance.Parent = animator
 	local t  = animator:LoadAnimation(animInstance) 
-	t.Priority = Enum.AnimationPriority.Action4		
+	-- t.Priority = Enum.AnimationPriority.Action4		
 	return t
 end
 local gymtracks:{[string]:AnimationTrack} = {}
 for name,animationId in pairs(sacred.animations.gym) do 
 	gymtracks[name] = loadTracks(animationId,name) 
-	
 end
 
 local cps = 1
@@ -39,7 +38,7 @@ local currentlyPlaying:AnimationTrack | nil = nil
 local persistence = 0.01
 gymtracks['back']:GetMarkerReachedSignal('start'):Connect(function()
 	if cps > 2 then
-		if currentlyPlaying then	 currentlyPlaying:AdjustSpeed(2) end
+		if currentlyPlaying then	 currentlyPlaying:AdjustSpeed(3) end
 		game.ReplicatedStorage.Remotes.animatePet:FireServer('play','back') 
 	end
 end)
@@ -80,14 +79,16 @@ mouse.Button1Down:Connect(function()
 end)
 
 local bosstracks:{[string]:AnimationTrack} = {}
-for name,animationId in pairs(sacred.animations.boss) do bosstracks[name] = loadTracks(animationId,name) end
-bosstracks['init'].Looped = false
-bosstracks['init']:AdjustSpeed(0.001)
+for name,animationId in pairs(sacred.animations.boss) do bosstracks[name] = loadTracks(animationId,name) bosstracks[name].Looped = false end
+bosstracks['init'].Looped = true	 
+
 animEv.Event:Connect(function(data)
+	for _,track in pairs(bosstracks) do track:Stop() end
+	bosstracks[data.child]:Play() 
+	print(bosstracks[data.child])
 	if data.family == 'boss' then 
-		for name,track in pairs(bosstracks) do track:Stop(0.5) end
-		bosstracks[data.child]:Play(0.25)
-		bosstracks['init']:AdjustSpeed(0.001)
-		if data.child=='win' then game.ReplicatedStorage.Bindables._tutBossWon:Fire() end
+		if data.child=='win' then 
+			game.ReplicatedStorage.Bindables._tutBossWon:Fire() 
+		end
 	end
 end)

@@ -18,6 +18,15 @@ local module = {
 		{ onLevel = 12, rewards = {'2nd MS reward n1', '2nd MS reward n2', '2nd MS reward n3' }},
 		{ onLevel = 20, rewards = {'3rd MS reward n1', '3rd MS reward n2', '3rd MS reward n3' }}
 	},
+	food = {
+		cookie = 100;
+		corndog = 10;  
+		dinonuggets = 50;  
+		dinosoda = 500;  
+		apple = 25;  
+		meat = 250;  
+		lollipop = 125;  
+	},
 	tamer = {
 		bronze =   { back = 100, chest = 100, arms = 100, legs = 100, stamina = 300 },
 		silver =   { back = 100, chest = 100, arms = 100, legs = 100, stamina = 300 },
@@ -112,7 +121,13 @@ local module = {
 			legs 	  = 76416572263780 , -- leg lift
 			arms    = 114408369352630,--109108022501449, -- squat
 		},
-		boss = { init = 118679207784402, lost = 140372530988812, win  = 90209508629498, }
+		boss = { init = 85930718791547, lost = 136700641505530, win  = 93747463993003  },
+		bossfights = {
+			pink = 112473303563847,
+			green = 125544415384905,
+			bavely = 75207337320689,
+			guesty = 81618635018107
+		}
 	},
 	PetAnimations= {
 		dactly 	= {idle = 138639237389424,run = 103208851986605,jump = 110904156705939,walk = 112272777854914,

@@ -12,6 +12,7 @@ local bosses = {
 		rewardPool = {min=2000,max=10000}, minimumPower =  1000000,
 		occupant = nil, health = 50, 	 thread = nil,	
 		regen = 5, resistence = 0,  speed = 2.5,	 
+		track = nil
 	},
 	guesty = {
 		instance = workspace:WaitForChild('bosses'):WaitForChild('guesty'),
@@ -19,6 +20,7 @@ local bosses = {
 		rewardPool = {min=500, max=2000}, minimumPower =  100000,
 		occupant = nil, health = 50, 	 thread = nil,	
 		regen = 5, resistence = 0,  speed = 2.5,	 
+		track = nil
 	},
 	bavely = {
 		instance = workspace:WaitForChild('bosses'):WaitForChild('bavely'),
@@ -26,6 +28,7 @@ local bosses = {
 		rewardPool = {min=100, max=400}, minimumPower =  12000,
 		occupant = nil, health = 50, 	 thread = nil,	
 		regen = 5, resistence = 0,  speed = 2.5,	 
+		track = nil
 	},
 	green = {
 		instance = workspace:WaitForChild('bosses'):WaitForChild('green'),
@@ -33,6 +36,7 @@ local bosses = {
 		rewardPool = {min=10,max=40}, minimumPower =  400,
 		occupant = nil, health = 50, 	 thread = nil,	
 		regen = 5, resistence = 0,  speed = 2.5,	 
+		track = nil
 	},
 	
 }

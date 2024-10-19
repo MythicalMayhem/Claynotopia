@@ -18,10 +18,11 @@ function player:GetData(userid)
 		player.connections[userid] = {
 			activity = nil,
 			stamina = 100,
+			food = { "cookie" },
 			legs = 0,
 			arms = 0,
 			back = 0,
-			cash = 0,
+			cash = 10000,
 			chest = 0,
 			rank = 1,
 			level = 0,

@@ -9,6 +9,7 @@ export type ui_trigger_normal = typeof(game.Workspace.uiParts.gymShop)
 export type gym_equipment_model = typeof(game.Workspace.gym.equipment.bag.four)
 export type client_player_data = {	 
 	activity : {family:string,child:string?,name:string?,amount:string?,weight:string?}?,
+	food : {string},
 	chest 		: number,
 	stamina		: number,
 	legs		: number,

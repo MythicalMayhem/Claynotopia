@@ -3,6 +3,7 @@ local requestRem = game.ReplicatedStorage.Remotes.requestData
 local purchaseRem = game.ReplicatedStorage.Remotes.purchase
 local gameData  = require(game.ServerScriptService.gameData)
 local playerModule = require(game.ServerScriptService.playerData)
+local sacred = require(game.ReplicatedStorage.Modules.SACRED)
 
 purchaseRem.OnServerEvent:Connect(function(player,reqData)
 	if reqData.family == 'claymaker' then			
@@ -21,11 +22,18 @@ purchaseRem.OnServerEvent:Connect(function(player,reqData)
 					candidate = l[k]
 				end
 			end
-		end
-		print(reqData.origin)
+		end 
 		playerModule:AddPetToBackPack(player.UserId,candidate.name)
 		purchaseRem:FireClient(player, {family = 'claymakereward', child = candidate ,origin = reqData.origin})
 		requestRem:FireClient(player,'playerData',playerModule:GetData(player.UserId))
+	elseif reqData.family == "food" then
+		local price = sacred.food[reqData.child]
+		local p = playerModule.connections[player.UserId]
+		if price > p.cash then return end
+		p.cash -= price 
+		playerModule:sendUpdate(player.UserId)
+		table.insert(p.food,reqData.child)
 	end
+
 end)
  

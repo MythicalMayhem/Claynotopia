@@ -12,7 +12,7 @@ local info:types.client_player_data  = {
 	cash = 0 ,
 	level = 0,
 	levelProgress = 0,
-
+	food = {},
 	chests = {vip=tick() , daily=tick() , group=tick() },
 	multiplier = 1,
 	clicks = {},

@@ -55,7 +55,6 @@ end
 
 
 function tweens:toggle(group:string,name:string,dontHideOtherWindows:boolean?)
-	print(self,group,name)
 	local window = self.windows[group][name]
 	if (window.show.PlaybackState == Enum.PlaybackState.Playing) 
 		or (window.hide.PlaybackState == Enum.PlaybackState.Playing) then

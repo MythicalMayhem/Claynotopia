@@ -104,7 +104,11 @@ function module:setData(data: types.client_player_data)
 			v.progressTxt.Text = tostring(math.round(curr * 10) / 10) .. "/" .. tostring(max)
 		end
 	end
-
+	player.Backpack:ClearAllChildren()
+	for _, name in pairs(data.food) do
+		local part   = game.ReplicatedStorage.assets.food[name]:Clone()
+		part.Parent = 		player.Backpack 
+	end
 	---- ---- chests
 	if chestTimerThread then
 		return
@@ -153,11 +157,11 @@ function module:setAura(data, selected)
 		t.Name = v
 		t.Parent = wrapper
 		t.ImageLabel.Image = sacred.assets.auras[v]
-		--t.image
 		t.MouseButton1Up:Connect(function() auraRemote:FireServer("attach", v) end)
 	end
 	if game.Workspace:WaitForChild("Aura"):WaitForChild("PrimaryPart").Rig:FindFirstChild("dummy") then
 		game.Workspace.Aura.PrimaryPart.Rig.dummy.HumanoidRootPart.RootAttachment:ClearAllChildren()
+		print(selected)
 		game.ReplicatedStorage.assets.auras[selected].Attachment:Clone().Parent =
 			game.Workspace.Aura.PrimaryPart.Rig.dummy.HumanoidRootPart.RootAttachment
 	end
